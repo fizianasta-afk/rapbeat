@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAPBEAT AI STUDIO</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #090910;
+  color: white;
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 7%;
+  border-bottom: 1px solid #292238;
+}
+
+.logo {
+  color: #b88cff;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.logo span {
+  color: white;
+}
+
+.tag {
+  color: #c6a9ff;
+  border: 1px solid #68459b;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+main {
+  max-width: 950px;
+  margin: 55px auto;
+  padding: 20px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.hero h1 {
+  font-size: clamp(35px, 7vw, 65px);
+  margin-bottom: 15px;
+}
+
+.hero h1 span {
+  color: #b88cff;
+}
+
+.hero p {
+  color: #aaa8bc;
+  line-height: 1.7;
+}
+
+.panel {
+  background: #13121e;
+  border: 1px solid #302641;
+  border-radius: 20px;
+  padding: 26px;
+  margin-bottom: 22px;
+}
+
+label {
+  display: block;
+  color: #d6c3ff;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+textarea, select, input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #393248;
+  background: #0b0a12;
+  color: white;
+  font: inherit;
+  margin-bottom: 22px;
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 20px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.primary {
+  width: 100%;
+  color: white;
+  background: linear-gradient(100deg, #7541d8, #b34ce5);
+}
+
+.primary:hover {
+  filter: brightness(1.15);
+}
+
+.hint {
+  color: #9995aa;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 14px;
+}
+
+footer {
+  text-align: center;
+  color: #777386;
+  padding: 25px;
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">RAPBEAT <span>AI</span></div>
+  <div class="tag">AI MUSIC STUDIO</div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>YOUR LYRICS.<br>
+    YOUR <span>BEAT.</span></h1>
+
+    <p>
+      Masukkan materi rap kamu.
+      Temukan karakter beat yang cocok untuk
+      battle rap, freestyle, dan panggung event.
+    </p>
+  </section>
+
+  <section class="panel">
+    <label for="materi">🎤 MATERI RAP KAMU</label>
+
+    <textarea id="materi"
+      placeholder="Tuliskan materi rap atau tema penampilan kamu di sini..."></textarea>
+
+    <label for="genre">🎧 GAYA MUSIK</label>
+
+    <select id="genre">
+      <option value="Battle Rap">Battle Rap</option>
+      <option value="Trap">Trap</option>
+      <option value="Drill">Drill</option>
+      <option value="Boom Bap">Boom Bap / Old School</option>
+      <option value="Dark Hip Hop">Dark Hip Hop</option>
+      <option value="Freestyle">Freestyle Rap</option>
+      <option value="Cinematic Hip Hop">Cinematic Hip Hop</option>
+    </select>
+
+    <label for="energi">⚡ ENERGI BEAT</label>
+
+    <select id="energi">
+      <option value="Powerful and energetic">Powerful - Energi tinggi</option>
+      <option value="Dark and intense">Dark - Gelap dan intens</option>
+      <option value="Chill and smooth">Chill - Santai dan halus</option>
+      <option value="Aggressive and hard hitting">Aggressive - Keras</option>
+      <option value="Epic and dramatic">Epic - Megah dan dramatis</option>
+    </select>
+
+    <label for="tempo">🥁 TEMPO BEAT</label>
+
+    <select id="tempo">
+      <option value="AI menentukan tempo yang cocok">AI pilihkan tempo</option>
+      <option value="80 BPM">80 BPM - Lambat</option>
+      <option value="90 BPM">90 BPM - Sedang</option>
+      <option value="100 BPM">100 BPM - Energik</option>
+      <option value="120 BPM">120 BPM - Cepat</option>
+      <option value="140 BPM">140 BPM - Sangat energik</option>
+    </select>
+
+    <button class="primary" onclick="buatPrompt()">
+      ✨ ANALISIS MATERI RAP
+    </button>
+
+    <p class="hint">
+      Tahap ini menyiapkan deskripsi beat dari pilihanmu.
+      Generator audio AI akan kita sambungkan pada langkah berikutnya.
+    </p>
+  </section>
+
+  <section class="panel" id="hasil" hidden>
+    <label>🎼 DESKRIPSI BEAT KAMU</label>
+    <div id="deskripsi"
+      style="line-height:1.8; color:#ddd4ef; white-space:pre-wrap"></div>
+
+    <button class="primary" style="margin-top:20px"
+      onclick="salinPrompt()">
+      📋 SALIN DESKRIPSI BEAT
+    </button>
+
+    <p class="hint" id="status"></p>
+  </section>
+
+</main>
+
+<footer>
+  RAPBEAT AI STUDIO © 2026<br>
+  Create your sound. Own your stage.
+</footer>
+
+<script>
+function buatPrompt() {
+  const materi = document.getElementById("materi").value.trim();
+  const genre = document.getElementById("genre").value;
+  const energi = document.getElementById("energi").value;
+  const tempo = document.getElementById("tempo").value;
+
+  if (!materi) {
+    alert("Masukkan materi rap kamu terlebih dahulu!");
+    document.getElementById("materi").focus();
+    return;
+  }
+
+  const teks =
+`Buat musik instrumental untuk penampilan rapper.
+
+Gaya musik: ${genre}.
+Energi: ${energi}.
+Tempo: ${tempo}.
+
+Analisis tema materi berikut dan gunakan sebagai inspirasi suasana musik:
+${materi}
+
+PERSYARATAN AUDIO:
+- Instrumental saja, tanpa vokal dan tanpa lirik.
+- Drum hip hop yang kuat dan ritmis.
+- Bass yang sesuai dengan genre.
+- Melodi yang mendukung suasana materi.
+- Struktur intro, verse, hook, dan outro.
+- Berikan ruang agar suara rapper terdengar jelas.
+- Hasil musik orisinal yang cocok untuk penampilan panggung.`;
+
+  document.getElementById("deskripsi").textContent = teks;
+  document.getElementById("hasil").hidden = false;
+  document.getElementById("status").textContent =
+    "Deskripsi berhasil dibuat. Ini belum merupakan file audio.";
+
+  document.getElementById("hasil").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+async function salinPrompt() {
+  const teks = document.getElementById("deskripsi").textContent;
+
+  try {
+    await navigator.clipboard.writeText(teks);
+    document.getElementById("status").textContent =
+      "Deskripsi berhasil disalin!";
+  } catch (e) {
+    document.getElementById("status").textContent =
+      "Salin deskripsi secara manual dari kotak teks.";
+  }
+}
+</script>
+
+</body>
+</html>
