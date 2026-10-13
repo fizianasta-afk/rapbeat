@@ -4,285 +4,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAPBEAT AI STUDIO</title>
-
+<title>RAPBEAT AI - Beat Generator</title>
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: #090910;
-  color: white;
-  min-height: 100vh;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 22px 7%;
-  border-bottom: 1px solid #292238;
-}
-
-.logo {
-  color: #b88cff;
-  font-size: 23px;
-  font-weight: bold;
-}
-
-.logo span {
-  color: white;
-}
-
-.tag {
-  color: #c6a9ff;
-  border: 1px solid #68459b;
-  padding: 8px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-main {
-  max-width: 950px;
-  margin: 55px auto;
-  padding: 20px;
-}
-
-.hero {
-  text-align: center;
-  margin-bottom: 35px;
-}
-
-.hero h1 {
-  font-size: clamp(35px, 7vw, 65px);
-  margin-bottom: 15px;
-}
-
-.hero h1 span {
-  color: #b88cff;
-}
-
-.hero p {
-  color: #aaa8bc;
-  line-height: 1.7;
-}
-
-.panel {
-  background: #13121e;
-  border: 1px solid #302641;
-  border-radius: 20px;
-  padding: 26px;
-  margin-bottom: 22px;
-}
-
-label {
-  display: block;
-  color: #d6c3ff;
-  font-weight: bold;
-  margin-bottom: 12px;
-}
-
-textarea, select, input {
-  width: 100%;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #393248;
-  background: #0b0a12;
-  color: white;
-  font: inherit;
-  margin-bottom: 22px;
-}
-
-textarea {
-  min-height: 150px;
-  resize: vertical;
-  line-height: 1.6;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  border-radius: 10px;
-  padding: 15px 20px;
-  font-weight: bold;
-  font-size: 15px;
-}
-
-.primary {
-  width: 100%;
-  color: white;
-  background: linear-gradient(100deg, #7541d8, #b34ce5);
-}
-
-.primary:hover {
-  filter: brightness(1.15);
-}
-
-.hint {
-  color: #9995aa;
-  font-size: 13px;
-  line-height: 1.6;
-  margin-top: 14px;
-}
-
-footer {
-  text-align: center;
-  color: #777386;
-  padding: 25px;
-  font-size: 13px;
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#080b14;color:#f5f7ff}
+header{text-align:center;padding:35px 15px;background:linear-gradient(135deg,#17133a,#102d40)}
+.logo{font-size:38px;font-weight:900;color:#a78bfa}
+header p{color:#c6c9e0}
+main{max-width:850px;margin:25px auto;padding:20px}
+.panel{background:#121827;border:1px solid #29334a;border-radius:18px;padding:24px;margin-bottom:20px}
+h2{margin-top:0}
+label{display:block;margin:18px 0 8px;font-weight:bold}
+textarea,select{width:100%;padding:13px;border-radius:10px;border:1px solid #39445e;background:#0a1020;color:white;font-size:15px}
+textarea{min-height:150px;resize:vertical}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+button{border:0;border-radius:10px;padding:15px 18px;font-size:15px;font-weight:bold;cursor:pointer}
+.generate{width:100%;margin-top:22px;color:#080b14;background:linear-gradient(90deg,#a78bfa,#38bdf8)}
+.generate:disabled{opacity:.5;cursor:wait}
+#status{margin-top:18px;line-height:1.6;overflow-wrap:anywhere}
+audio{width:100%;margin-top:15px}
+.download{display:inline-block;margin-top:15px;padding:12px 16px;border-radius:9px;background:#263858;color:white;text-decoration:none}
+.small{color:#aab4ce;font-size:13px;line-height:1.6}
+footer{text-align:center;color:#7e8ba8;padding:25px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.panel{padding:17px}main{padding:12px}}
 </style>
 </head>
-
 <body>
-
 <header>
-  <div class="logo">RAPBEAT <span>AI</span></div>
-  <div class="tag">AI MUSIC STUDIO</div>
+  <div class="logo">🎧 RAPBEAT AI</div>
+  <h1>Buat Beat Rap dari Materimu</h1>
+  <p>Ubah ide, tema, dan materi event menjadi inspirasi beat instrumental.</p>
 </header>
 
 <main>
+  <section class="panel">
+    <h2>🎤 01 — Masukkan Materi Rap</h2>
+    <p class="small">Tulis tema acara, pesan, suasana, atau materi rap. AI akan menggunakannya sebagai inspirasi musik, bukan sebagai lirik.</p>
 
-  <section class="hero">
-    <h1>YOUR LYRICS.<br>
-    YOUR <span>BEAT.</span></h1>
+    <label for="materi">Materi rap kamu</label>
+    <textarea id="materi" maxlength="1500" placeholder="Contoh: Event battle rap antar sekolah, penuh semangat, persaingan sehat, percaya diri, dan ingin membuktikan kemampuan di atas panggung..."></textarea>
 
-    <p>
-      Masukkan materi rap kamu.
-      Temukan karakter beat yang cocok untuk
-      battle rap, freestyle, dan panggung event.
-    </p>
+    <div class="grid">
+      <div>
+        <label for="genre">Genre</label>
+        <select id="genre">
+          <option>Battle Rap</option>
+          <option>Trap</option>
+          <option>Drill</option>
+          <option>Boom Bap</option>
+          <option>Dark Hip Hop</option>
+          <option>Freestyle</option>
+          <option>Cinematic Hip Hop</option>
+        </select>
+      </div>
+      <div>
+        <label for="energi">Energi</label>
+        <select id="energi">
+          <option>Powerful and energetic</option>
+          <option>Dark and intense</option>
+          <option>Chill and smooth</option>
+          <option>Aggressive and hard hitting</option>
+          <option>Epic and dramatic</option>
+        </select>
+      </div>
+      <div>
+        <label for="tempo">Tempo</label>
+        <select id="tempo">
+          <option>AI menentukan tempo yang cocok</option>
+          <option>80 BPM</option>
+          <option>90 BPM</option>
+          <option>100 BPM</option>
+          <option>120 BPM</option>
+          <option>140 BPM</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="generate" id="generateBtn" onclick="buatBeat()">⚡ GENERATE BEAT AI</button>
+    <div id="status" role="status">Siap membuat beat? Isi materi rap, pilih gaya musik, lalu tekan tombol di atas.</div>
   </section>
 
   <section class="panel">
-    <label for="materi">🎤 MATERI RAP KAMU</label>
-
-    <textarea id="materi"
-      placeholder="Tuliskan materi rap atau tema penampilan kamu di sini..."></textarea>
-
-    <label for="genre">🎧 GAYA MUSIK</label>
-
-    <select id="genre">
-      <option value="Battle Rap">Battle Rap</option>
-      <option value="Trap">Trap</option>
-      <option value="Drill">Drill</option>
-      <option value="Boom Bap">Boom Bap / Old School</option>
-      <option value="Dark Hip Hop">Dark Hip Hop</option>
-      <option value="Freestyle">Freestyle Rap</option>
-      <option value="Cinematic Hip Hop">Cinematic Hip Hop</option>
-    </select>
-
-    <label for="energi">⚡ ENERGI BEAT</label>
-
-    <select id="energi">
-      <option value="Powerful and energetic">Powerful - Energi tinggi</option>
-      <option value="Dark and intense">Dark - Gelap dan intens</option>
-      <option value="Chill and smooth">Chill - Santai dan halus</option>
-      <option value="Aggressive and hard hitting">Aggressive - Keras</option>
-      <option value="Epic and dramatic">Epic - Megah dan dramatis</option>
-    </select>
-
-    <label for="tempo">🥁 TEMPO BEAT</label>
-
-    <select id="tempo">
-      <option value="AI menentukan tempo yang cocok">AI pilihkan tempo</option>
-      <option value="80 BPM">80 BPM - Lambat</option>
-      <option value="90 BPM">90 BPM - Sedang</option>
-      <option value="100 BPM">100 BPM - Energik</option>
-      <option value="120 BPM">120 BPM - Cepat</option>
-      <option value="140 BPM">140 BPM - Sangat energik</option>
-    </select>
-
-    <button class="primary" onclick="buatPrompt()">
-      ✨ ANALISIS MATERI RAP
-    </button>
-
-    <p class="hint">
-      Tahap ini menyiapkan deskripsi beat dari pilihanmu.
-      Generator audio AI akan kita sambungkan pada langkah berikutnya.
-    </p>
+    <h2>🎵 02 — Hasil Beat</h2>
+    <p class="small">Audio yang berhasil dibuat akan muncul di sini. Kamu bisa mendengarkan dan mengunduhnya.</p>
+    <div id="hasil">
+      <p class="small">Belum ada beat. Masukkan materi dan tekan GENERATE BEAT AI.</p>
+    </div>
   </section>
 
-  <section class="panel" id="hasil" hidden>
-    <label>🎼 DESKRIPSI BEAT KAMU</label>
-    <div id="deskripsi"
-      style="line-height:1.8; color:#ddd4ef; white-space:pre-wrap"></div>
-
-    <button class="primary" style="margin-top:20px"
-      onclick="salinPrompt()">
-      📋 SALIN DESKRIPSI BEAT
-    </button>
-
-    <p class="hint" id="status"></p>
+  <section class="panel">
+    <h2>💡 Tips Materi yang Bagus</h2>
+    <ul class="small">
+      <li>Jelaskan tema dan tujuan event rapper.</li>
+      <li>Tulis suasana yang diinginkan, misalnya tegang, energik, atau santai.</li>
+      <li>Pilih genre dan tempo sesuai gaya rapper.</li>
+      <li>Versi ini meminta musik instrumental tanpa vokal.</li>
+    </ul>
   </section>
-
 </main>
 
-<footer>
-  RAPBEAT AI STUDIO © 2026<br>
-  Create your sound. Own your stage.
-</footer>
+<footer>RAPBEAT AI · Dibuat untuk inspirasi beat rap</footer>
 
 <script>
-function buatPrompt() {
+const API_URL = "https://rapbeat.fizianasta.workers.dev";
+
+async function buatBeat() {
   const materi = document.getElementById("materi").value.trim();
   const genre = document.getElementById("genre").value;
   const energi = document.getElementById("energi").value;
   const tempo = document.getElementById("tempo").value;
+  const status = document.getElementById("status");
+  const hasil = document.getElementById("hasil");
+  const tombol = document.getElementById("generateBtn");
 
   if (!materi) {
-    alert("Masukkan materi rap kamu terlebih dahulu!");
+    status.textContent = "⚠️ Masukkan materi rap terlebih dahulu.";
     document.getElementById("materi").focus();
     return;
   }
 
-  const teks =
-`Buat musik instrumental untuk penampilan rapper.
-
-Gaya musik: ${genre}.
-Energi: ${energi}.
-Tempo: ${tempo}.
-
-Analisis tema materi berikut dan gunakan sebagai inspirasi suasana musik:
-${materi}
-
-PERSYARATAN AUDIO:
-- Instrumental saja, tanpa vokal dan tanpa lirik.
-- Drum hip hop yang kuat dan ritmis.
-- Bass yang sesuai dengan genre.
-- Melodi yang mendukung suasana materi.
-- Struktur intro, verse, hook, dan outro.
-- Berikan ruang agar suara rapper terdengar jelas.
-- Hasil musik orisinal yang cocok untuk penampilan panggung.`;
-
-  document.getElementById("deskripsi").textContent = teks;
-  document.getElementById("hasil").hidden = false;
-  document.getElementById("status").textContent =
-    "Deskripsi berhasil dibuat. Ini belum merupakan file audio.";
-
-  document.getElementById("hasil").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-}
-
-async function salinPrompt() {
-  const teks = document.getElementById("deskripsi").textContent;
+  tombol.disabled = true;
+  tombol.textContent = "⏳ SEDANG MEMBUAT BEAT...";
+  status.textContent = "Mengirim materi ke AI musik. Mohon tunggu, proses dapat memerlukan waktu.";
+  hasil.innerHTML = "";
 
   try {
-    await navigator.clipboard.writeText(teks);
-    document.getElementById("status").textContent =
-      "Deskripsi berhasil disalin!";
-  } catch (e) {
-    document.getElementById("status").textContent =
-      "Salin deskripsi secara manual dari kotak teks.";
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ materi, genre, energi, tempo })
+    });
+
+    if (!response.ok) {
+      const pesan = await response.text();
+      throw new Error(pesan || ("HTTP " + response.status));
+    }
+
+    const blob = await response.blob();
+    if (!blob.size) {
+      throw new Error("Audio kosong diterima dari server.");
+    }
+
+    const audioUrl = URL.createObjectURL(blob);
+    const audio = document.createElement("audio");
+    audio.controls = true;
+    audio.src = audioUrl;
+    audio.preload = "metadata";
+
+    const download = document.createElement("a");
+    download.href = audioUrl;
+    download.download = "RAPBEAT-AI." +
+      (blob.type.includes("wav") ? "wav" :
+       blob.type.includes("mp4") ? "mp4" : "mp3");
+    download.className = "download";
+    download.textContent = "⬇️ DOWNLOAD BEAT";
+
+    hasil.appendChild(audio);
+    hasil.appendChild(document.createElement("br"));
+    hasil.appendChild(download);
+    status.textContent = "✅ Beat berhasil dibuat! Tekan Play untuk mendengarkan.";
+  } catch (error) {
+    status.textContent = "❌ Gagal membuat beat: " + error.message +
+      " | Periksa konfigurasi Cloudflare dan API ElevenLabs.";
+    hasil.innerHTML = '<p class="small">Belum ada audio. Jika masalah berlanjut, kirim teks error ini kepada ChatGPT. Jangan kirim API Key.</p>';
+  } finally {
+    tombol.disabled = false;
+    tombol.textContent = "⚡ GENERATE BEAT AI";
   }
 }
 </script>
-
 </body>
 </html>
